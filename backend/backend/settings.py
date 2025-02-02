@@ -41,6 +41,7 @@ CORS_ALLOWED_ORIGINS = [
     "exp://127.0.0.1:19000",  # Pour Expo (React Native)
     "http://localhost:19006",  # URL du serveur Expo en développement
     "http://172.20.10.12",
+    "http://172.20.10.15",
 ]
 
 # Configuration de la base de données MongoDB avec Djongo
