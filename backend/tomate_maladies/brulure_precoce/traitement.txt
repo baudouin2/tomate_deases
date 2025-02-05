@@ -1,0 +1,50 @@
+       \nUtilisation de fongicides spécifiques contre la brûlure précausse
+       \nTraitement avec des produits à base de cuivre
+       \nApplication de produits à base de soufre
+       \nUtilisation de produits à base de chlorothalonil
+       \nTraitement avec des produits à base de mancozèbe
+       \nApplication de produits à base de carbendazime
+       \nUtilisation de produits à base de thiophanate-méthyl
+       \nTraitement avec des produits à base de difénoconazole
+       \nApplication de produits à base de tébuconazole
+       \nUtilisation de produits à base de trifloxystrobine
+       \nTraitement avec des produits à base de pyraclostrobine
+       \nApplication de produits à base de fenhexamide
+       \nUtilisation de produits à base de cyazofamide
+       \nTraitement avec des produits à base de diméthomorphe
+       \nApplication de produits à base de maneb
+       \nUtilisation de produits à base de zineb
+       \nTraitement avec des produits à base de chlorothalonil
+       \nApplication de produits à base de copper oxychloride
+       \nUtilisation de produits à base de sulfur
+       \nTraitement avec des produits à base de lime sulfur
+       \nApplication de produits à base de potassium bicarbonate
+       \nUtilisation de produits à base de sodium bicarbonate
+       \nTraitement avec des produits à base de calcium carbonate
+       \nApplication de produits à base de magnesium carbonate
+       \nUtilisation de produits à base de potassium carbonate
+       \nTraitement avec des produits à base de sodium carbonate
+       \nApplication de produits à base de calcium hydroxide
+       \nUtilisation de produits à base de magnesium hydroxide
+       \nTraitement avec des produits à base de potassium hydroxide
+       \nApplication de produits à base de sodium hydroxide
+       \nUtilisation de produits à base de acide borique
+       \nTraitement avec des produits à base de acide citrique
+       \nApplication de produits à base de acide acétique
+       \nUtilisation de produits à base de acide tartarique
+       \nTraitement avec des produits à base de acide malique
+       \nApplication de produits à base de acide oxalique
+       \nUtilisation de produits à base de acide phosphorique
+       \nTraitement avec des produits à base de acide sulfurique
+       \nApplication de produits à base de acide nitrique
+       \nUtilisation de produits à base de acide chlorhydrique
+       \nTraitement avec des produits à base de calcium nitrate
+       \nApplication de produits à base de magnesium nitrate
+       \nUtilisation de produits à base de potassium nitrate
+       \nTraitement avec des produits à base de sodium nitrate
+       \nApplication de produits à base de ammonium nitrate
+       \nUtilisation de produits à base de uree
+       \nTraitement avec des produits à base de diammonium phosphate
+       \nApplication de produits à base de monopotassium phosphate
+       \nUtilisation de produits à base de dipotassium phosphate
+       \nTraitement avec des produits à base de tripotassium phosphate

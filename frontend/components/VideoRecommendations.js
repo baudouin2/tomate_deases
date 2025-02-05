@@ -12,7 +12,7 @@ const VideoRecommendations = () => {
 
   const loadVideos = async () => {
     setIsLoading(true);
-    const newVideos = await fetchVideoRecommendations('tomates', page);
+    const newVideos = await fetchVideoRecommendations('tomates', page);  // Exemple avec 'tomates'
     setVideos((prev) => [...prev, ...newVideos]);
     setIsLoading(false);
   };
@@ -27,7 +27,7 @@ const VideoRecommendations = () => {
 
       <FlatList
         data={videos}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item, index) => index.toString()}  // Utilisation de l'index comme clé unique
         renderItem={({ item }) => (
           <View style={styles.videoContainer}>
             <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />

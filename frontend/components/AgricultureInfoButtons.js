@@ -7,7 +7,7 @@ const shadingLevels = ["Faible", "Modéré", "Élevé"];  // Exemple de niveaux 
 const plantationDensities = ["Faible", "Moyenne", "Élevée"];  // Exemple de densités de plantation
 const irrigationFrequencies = ["Irrégulière", "Régulière"];  // Exemple de fréquences d'irrigation
 
-const AgricultureInfoButtons = ({ data, onChange }) => {
+const AgricultureInfoButtons = ({ data = {}, onChange }) => {
   return (
     <View style={styles.container}>
       {/* Champ Température */}
@@ -15,7 +15,7 @@ const AgricultureInfoButtons = ({ data, onChange }) => {
       <TextInput
         style={styles.input}
         keyboardType="numeric"
-        value={data.temperature}
+        value={data.temperature || ""} // Valeur par défaut
         onChangeText={(value) => onChange("temperature", value)}
         placeholder="Ex: 25"
       />
@@ -25,12 +25,12 @@ const AgricultureInfoButtons = ({ data, onChange }) => {
       <TextInput
         style={styles.input}
         keyboardType="numeric"
-        value={data.humidity}
+        value={data.humidity || ""} // Valeur par défaut
         onChangeText={(value) => onChange("humidity", value)}
         placeholder="Ex: 60"
       />
 
-      {/* Sélecteur de Type de Sol */}
+      {/* Sélecteurs */}
       <Text style={styles.label}>Type de sol :</Text>
       <View style={styles.buttonGroup}>
         {soilCategories.map((type) => (
@@ -47,7 +47,6 @@ const AgricultureInfoButtons = ({ data, onChange }) => {
         ))}
       </View>
 
-      {/* Sélecteur de Niveau d'Ombrage */}
       <Text style={styles.label}>Niveau d'ombrage :</Text>
       <View style={styles.buttonGroup}>
         {shadingLevels.map((level) => (
@@ -64,7 +63,6 @@ const AgricultureInfoButtons = ({ data, onChange }) => {
         ))}
       </View>
 
-      {/* Sélecteur de Densité de Plantation */}
       <Text style={styles.label}>Densité de plantation :</Text>
       <View style={styles.buttonGroup}>
         {plantationDensities.map((density) => (
@@ -81,7 +79,6 @@ const AgricultureInfoButtons = ({ data, onChange }) => {
         ))}
       </View>
 
-      {/* Sélecteur de Fréquence d'Irrigation */}
       <Text style={styles.label}>Fréquence d'irrigation :</Text>
       <View style={styles.buttonGroup}>
         {irrigationFrequencies.map((frequency) => (
@@ -100,6 +97,7 @@ const AgricultureInfoButtons = ({ data, onChange }) => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: { padding: 10 },

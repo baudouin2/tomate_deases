@@ -1,15 +1,22 @@
 import axios from 'axios';
 import { BASE_URL } from '../util/constants';
 
-export const fetchVideoRecommendations = async (query = 'tomates') => {
+export const fetchVideoRecommendations = async (query, page) => {
   try {
-    const response = await axios.get(`${BASE_URL}/youtube/`, { params: { query } });
-    return response.data.videos;
+    const response = await axios.get(`${BASE_URL}/youtube/`, {
+      params: {
+        query,
+        page,
+      },
+    });
+    return response.data;
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching video recommendations:", error);
     return [];
   }
 };
+
+
 
 export const diagnoseDisease = async (image, data) => {
   const formData = new FormData();

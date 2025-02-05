@@ -23,8 +23,19 @@ def video_recommendations(request):
                 status=200
             )
         
-        # Renvoi des vidéos dans la réponse
-        return JsonResponse({"videos": videos}, status=200)
+        # Renvoi des vidéos dans la réponse sous une forme plus simple
+        response_videos = [
+            {
+                "id": index,  # Utilise l'index comme identifiant unique
+                "title": video["title"],
+                "url": video["url"],
+                "thumbnail": video["thumbnail"],
+                "description": video["description"]
+            }
+            for index, video in enumerate(videos)
+        ]
+        
+        return JsonResponse({"videos": response_videos}, status=200)
 
     except Exception as e:
         # En cas d'erreur générale

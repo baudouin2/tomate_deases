@@ -1,0 +1,50 @@
+       \nUtilisation de pesticides spécifiques contre les vecteurs du virus
+       \nTraitement avec des produits à base de nicotine
+       \nApplication de produits à base de pyréthrine
+       \nUtilisation de produits à base de perméthrine
+       \nTraitement avec des produits à base de deltaméthrine
+       \nApplication de produits à base de lambda-cyhalothrine
+       \nUtilisation de produits à base de cyfluthrine
+       \nTraitement avec des produits à base de bifenthrine
+       \nApplication de produits à base de imidaclopride
+       \nUtilisation de produits à base de thiaméthoxame
+       \nTraitement avec des produits à base de clothianidine
+       \nApplication de produits à base de dinotefuran
+       \nUtilisation de produits à base de pymetrozine
+       \nTraitement avec des produits à base de spiromesifène
+       \nApplication de produits à base de pyridalyl
+       \nUtilisation de produits à base de chlorfenapyr
+       \nTraitement avec des produits à base de emamectine
+       \nApplication de produits à base de abamectine
+       \nUtilisation de produits à base de milbémycine
+       \nTraitement avec des produits à base de lufenuron
+       \nApplication de produits à base de diflubenzuron
+       \nUtilisation de produits à base de teflubenzuron
+       \nTraitement avec des produits à base de novaluron
+       \nApplication de produits à base de buprofézine
+       \nUtilisation de produits à base de pyriproxyfène
+       \nTraitement avec des produits à base de kinoprene
+       \nApplication de produits à base de hydraméthylnone
+       \nUtilisation de produits à base de methoprene
+       \nTraitement avec des produits à base de s-méthoprene
+       \nApplication de produits à base de pyriproxyfène
+       \nUtilisation de produits à base de spinosad
+       \nTraitement avec des produits à base de Bacillus thuringiensis
+       \nApplication de produits à base de Beauveria bassiana
+       \nUtilisation de produits à base de Metarhizium anisopliae
+       \nTraitement avec des produits à base de Paecilomyces fumosoroseus
+       \nApplication de produits à base de Verticillium lecanii
+       \nUtilisation de produits à base de Aschersonia aleyrodis
+       \nTraitement avec des produits à base de Lecanicillium lecanii
+       \nApplication de produits à base de Ampelomyces quisqualis
+       \nUtilisation de produits à base de Clonostachys rosea
+       \nTraitement avec des produits à base de Trichoderma harzianum
+       \nApplication de produits à base de Trichoderma viride
+       \nUtilisation de produits à base de Gliocladium virens
+       \nTraitement avec des produits à base de Penicillium oxalicum
+       \nApplication de produits à base de Aspergillus terreus
+       \nUtilisation de produits à base de Bacillus subtilis
+       \nTraitement avec des produits à base de Pseudomonas fluorescens
+       \nApplication de produits à base de Streptomyces griseus
+       \nUtilisation de produits à base de Trichoderma koningii
+       \nTraitement avec des produits à base de Fusarium oxysporum

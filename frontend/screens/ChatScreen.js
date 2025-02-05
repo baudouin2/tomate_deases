@@ -1,21 +1,26 @@
-//frontend\screens\ChatScreen.js
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { View, Text, TextInput, Button, FlatList, KeyboardAvoidingView, Platform, StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  FlatList,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { sendMessageToBot, getChatbotResponse } from '../services/api';  // Importation des fonctions d'API
-
-// Importation des constantes et messages
+import { sendMessageToChatbot } from '../services/api';
 import { ERROR_MESSAGES } from '../util/constants';
 
 const ChatScreen = () => {
-  const [messages, setMessages] = useState([]);  // État pour stocker les messages
-  const [userInput, setUserInput] = useState('');  // État pour la saisie de l'utilisateur
-  const flatListRef = useRef(null);  // Référence pour le FlatList, afin de faire défiler automatiquement
+  const [messages, setMessages] = useState([]);
+  const [userInput, setUserInput] = useState('');
+  const flatListRef = useRef(null);
 
-  // Fonction pour envoyer le message de l'utilisateur au chatbot et obtenir une réponse
   const sendMessage = useCallback(async () => {
     if (userInput.trim()) {
-      // Ajouter le message de l'utilisateur à la liste
       const newMessage = {
         sender: 'user',
         text: userInput,
@@ -23,38 +28,40 @@ const ChatScreen = () => {
       };
 
       setMessages((prevMessages) => [...prevMessages, newMessage]);
-      setUserInput('');  // Réinitialiser le champ de saisie
+      setUserInput('');
 
       try {
-        // Appel à la fonction API pour obtenir la réponse du chatbot
-        const response = await getChatbotResponse(userInput);
+        const response = await sendMessageToChatbot(userInput);
+
         const botMessage = {
           sender: 'bot',
-          text: response.text,  // Réponse du chatbot
+          text: response.text,
           timestamp: new Date(),
         };
         setMessages((prevMessages) => [...prevMessages, botMessage]);
       } catch (error) {
-        console.error('Erreur lors de l\'obtention de la réponse du chatbot:', error);
-        // Message d'erreur en cas de problème avec l'API
+        console.error("Erreur lors de l'obtention de la réponse du chatbot:", error);
         const errorMessage = {
           sender: 'bot',
-          text: ERROR_MESSAGES.API_ERROR,  // Message d'erreur
+          text: ERROR_MESSAGES.API_ERROR,
           timestamp: new Date(),
         };
         setMessages((prevMessages) => [...prevMessages, errorMessage]);
       }
     }
-  }, [userInput]);  // Ré-création de la fonction seulement lorsque userInput change
+  }, [userInput]);
 
-  // Fonction pour rendre chaque message dans la liste de chat
   const renderItem = ({ item }) => (
-    <View style={[styles.messageContainer, item.sender === 'user' ? styles.userMessage : styles.botMessage]}>
+    <View
+      style={[
+        styles.messageContainer,
+        item.sender === 'user' ? styles.userMessage : styles.botMessage,
+      ]}
+    >
       <Text style={styles.messageText}>{item.text}</Text>
     </View>
   );
 
-  // Faire défiler automatiquement la liste jusqu'à la fin quand il y a un nouveau message
   useEffect(() => {
     if (flatListRef.current) {
       flatListRef.current.scrollToEnd({ animated: true });
@@ -63,28 +70,29 @@ const ChatScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'position'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}
       style={styles.container}
     >
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.innerContainer}>
-          {/* Liste des messages */}
           <FlatList
             ref={flatListRef}
             data={messages}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
-            inverted={true}  // Inverser l'ordre des messages pour afficher les plus récents en bas
+            inverted={true}
+            contentContainerStyle={{ paddingBottom: 20 }}
           />
 
-          {/* Zone de saisie pour l'utilisateur */}
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.textInput}
               placeholder="Écrivez votre message..."
               value={userInput}
               onChangeText={setUserInput}
-              onSubmitEditing={sendMessage}  // Permet d'envoyer le message lorsque l'utilisateur appuie sur Entrée
+              onSubmitEditing={sendMessage}
+              returnKeyType="send"
             />
             <TouchableWithoutFeedback onPress={sendMessage}>
               <Ionicons name="send" size={30} color="blue" style={styles.sendIcon} />
@@ -96,7 +104,6 @@ const ChatScreen = () => {
   );
 };
 
-// Styles pour l'interface
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -104,8 +111,7 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     flex: 1,
-    justifyContent: 'flex-end',
-    padding: 10,
+    paddingBottom: 10,
   },
   messageContainer: {
     maxWidth: '80%',
@@ -128,11 +134,10 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
     borderTopWidth: 1,
     borderTopColor: '#ddd',
-    paddingTop: 10,
-    paddingBottom: 10,
+    padding: 10,
+    backgroundColor: '#fff',
   },
   textInput: {
     flex: 1,

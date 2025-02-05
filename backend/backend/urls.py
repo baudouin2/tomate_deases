@@ -10,3 +10,4 @@ urlpatterns = [
     # Routes pour les recommandations basées sur YouTube
     path("api/youtube/", include("recommendations.urls", namespace="recommendations")),
 ]
+

@@ -7,11 +7,16 @@ import {
   Alert,
   StyleSheet,
   ScrollView,
+  Image,
+  TouchableOpacity,
 } from "react-native";
 import ImageUploader from "../components/ImageUploader";
 import AgricultureInfoButtons from "../components/AgricultureInfoButtons";
 import { diagnoseDisease } from "../services/api";
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../util/constants";
+
+// Import du icon (assurez-vous que le chemin du icon est correct)
+import icon from "../assets/icon.png";  
 
 const DiagnosisScreen = () => {
   const [diagnosis, setDiagnosis] = useState(null);
@@ -29,21 +34,19 @@ const DiagnosisScreen = () => {
     try {
       const { humidity, temperature, soilType, shadingLevel, plantationDensity, irrigationFrequency } = agricultureData;
 
-      // Vérification si tous les champs nécessaires sont remplis
       if (!humidity || !temperature || !soilType || !shadingLevel || !plantationDensity || !irrigationFrequency) {
         Alert.alert("Erreur", "Veuillez remplir tous les champs des données agricoles.");
         setLoading(false);
         return;
       }
 
-      // Appel à l'API avec tous les paramètres nécessaires
       const response = await diagnoseDisease(imageUri, {
         humidity,
         temperature,
         soil_type: soilType,
         shading_level: shadingLevel,
         plantation_density: plantationDensity,
-        irrigation_frequency: irrigationFrequency
+        irrigation_frequency: irrigationFrequency,
       });
 
       setDiagnosis(response.data);
@@ -58,17 +61,25 @@ const DiagnosisScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Diagnostic des maladies des tomates</Text>
-
-      <ImageUploader onImageSelect={setImageUri} />
-
-      <AgricultureInfoButtons onSelect={setAgricultureData} />
-
-      <View style={styles.buttonContainer}>
-        <Button title="Diagnostiquer" onPress={handleDiagnose} disabled={loading} />
+      {/* En-tête avec icon */}
+      <View style={styles.header}>
+        <Image source={icon} style={styles.icon} />
+        <Text style={styles.title}>AgroTom</Text>
       </View>
 
-      {loading && <ActivityIndicator size="large" color="#00AAFF" />}
+      <ImageUploader onImageSelect={setImageUri} />
+      <AgricultureInfoButtons onChange={setAgricultureData} />
+
+      {/* Bouton stylisé */}
+      <TouchableOpacity
+        style={[styles.button, loading && styles.buttonDisabled]}
+        onPress={handleDiagnose}
+        disabled={loading}
+      >
+        <Text style={styles.buttonText}>{loading ? "Analyse en cours..." : "Diagnostiquer"}</Text>
+      </TouchableOpacity>
+
+      {loading && <ActivityIndicator size="large" color="#00AAFF" style={styles.loader} />}
 
       {diagnosis && (
         <View style={styles.resultContainer}>
@@ -86,31 +97,75 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 20,
     backgroundColor: "#F5F5F5",
+    alignItems: "center",
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#4A90E2",
+    padding: 15,
+    borderRadius: 10,
+    width: "100%",
+    marginBottom: 15,
+    elevation: 3, // Ombre Android
+    shadowColor: "#000", // Ombre iOS
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+  },
+  icon: {
+    width: 50,
+    height: 50,
+    resizeMode: "contain",
+    marginRight: 10,
   },
   title: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 15,
-    textAlign: "center",
-    color: "#333",
+    color: "#FFFFFF",
   },
-  buttonContainer: {
-    marginVertical: 20,
+  button: {
+    backgroundColor: "#4A90E2",
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 25,
+    marginTop: 20,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 3,
+  },
+  buttonDisabled: {
+    backgroundColor: "#A9CCE3",
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  loader: {
+    marginVertical: 15,
   },
   resultContainer: {
     backgroundColor: "#E8F4F8",
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 10,
     marginTop: 20,
+    width: "100%",
+    elevation: 2,
   },
   resultTitle: {
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 5,
+    color: "#007ACC",
   },
   resultText: {
     fontSize: 16,
-    color: "#333",
+    color: "#333333",
+    marginBottom: 5,
   },
 });
 

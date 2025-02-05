@@ -1,11 +1,12 @@
-# recommandations/youtube_api.py
-import requests
+from django.http import JsonResponse
 from .models import VideoRecommendation
+import requests
 
 YOUTUBE_API_KEY = "AIzaSyAlQ-MMyUnziyWGg38MNZJG5lv0AOmIXd0"
 YOUTUBE_API_URL = "https://www.googleapis.com/youtube/v3/search"
 
-def get_video_recommendations(query='tomate cameroun'):
+def get_video_recommendations(request):
+    query = request.GET.get('query', 'tomate cameroun')
     params = {
         "part": "snippet",
         "q": query,
@@ -19,25 +20,18 @@ def get_video_recommendations(query='tomate cameroun'):
         response.raise_for_status()  # Vérifie si la réponse est correcte (200 OK)
         data = response.json()
         
-        # Sauvegarde les vidéos récupérées dans la base de données
         videos = []
         for item in data.get("items", []):
-            video = VideoRecommendation(
-                title=item["snippet"]["title"],
-                url=f"https://www.youtube.com/watch?v={item['id']['videoId']}",
-                thumbnail=item["snippet"]["thumbnails"]["default"]["url"],
-                description=item["snippet"].get("description", "")
-            )
-            video.save()  # Sauvegarde chaque vidéo dans la base de données
-            videos.append({
-                "title": video.title,
-                "url": video.url,
-                "thumbnail": video.thumbnail,
-                "description": video.description
-            })
+            video = {
+                "title": item["snippet"]["title"],
+                "url": f"https://www.youtube.com/watch?v={item['id']['videoId']}",
+                "thumbnail": item["snippet"]["thumbnails"]["default"]["url"],
+                "description": item["snippet"].get("description", "")
+            }
+            videos.append(video)
         
-        return videos
+        return JsonResponse(videos, safe=False)
 
     except requests.exceptions.RequestException as e:
         # En cas d'erreur dans l'appel API, renvoyer une erreur générique
-        return {"error": str(e)}
+        return JsonResponse({"error": str(e)}, status=500)

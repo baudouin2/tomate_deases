@@ -13,8 +13,12 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
-    },
+  "supportsTablet": true,
+  "infoPlist": {
+    "NSPhotoLibraryUsageDescription": "Nous avons besoin d'accéder à vos photos pour sélectionner une image."
+      }
+    }
+,
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",

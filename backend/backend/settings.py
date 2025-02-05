@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 
+ROOT_URLCONF = 'backend.urls'
+
 # Définir la base du projet
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = 'lh(5$$%wf+tf%m7%58x6o!52@x%n9y1)p5heq0(sp4sj@ro7ne'
@@ -35,14 +37,8 @@ MIDDLEWARE = [
 ]
 
 # Autoriser les requêtes du frontend (CORS)
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Pour le frontend React
-    "http://127.0.0.1:3000",
-    "exp://127.0.0.1:19000",  # Pour Expo (React Native)
-    "http://localhost:19006",  # URL du serveur Expo en développement
-    "http://172.20.10.12",
-    "http://172.20.10.15",
-]
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 # Configuration de la base de données MongoDB avec Djongo
 DATABASES = {

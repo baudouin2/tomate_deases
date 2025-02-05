@@ -1,0 +1,50 @@
+       \nTaches brunes ou noires sur les feuilles
+       \nFeuilles jaunies ou flétries
+       \nPerte de feuilles
+       \nRalentissement de la croissance
+       \nFruits déformés ou endommagés
+       \nTaches noires sur les fruits
+       \nFruits qui pourrissent rapidement
+       \nFeuilles qui se recroquevillent
+       \nTiges qui se dessèchent
+       \nRacines qui se putréfient
+       \nFruits qui ne mûrissent pas
+       \nFeuilles qui deviennent cireuses
+       \nTaches blanches ou grises sur les feuilles
+       \nFeuilles qui se décolorent
+       \nPerte de vigueur
+       \nRalentissement de la production de fruits
+       \nFruits qui sont plus petits que la normale
+       \nFeuilles qui sont plus grandes que la normale
+       \nTiges qui sont plus longues que la normale
+       \nRacines qui sont plus profondes que la normale
+       \nFruits qui sont déformés ou bosselés
+       \nFeuilles qui sont déchirées ou lacérées
+       \nTiges qui sont cassées ou brisées
+       \nRacines qui sont endommagées ou pourries
+       \nFruits qui sont infestés de ravageurs
+       \nFeuilles qui sont infestées de ravageurs
+       \nTiges qui sont infestées de ravageurs
+       \nRacines qui sont infestées de ravageurs
+       \nFruits qui sont pourris ou putrides
+       \nFeuilles qui sont pourries ou putrides
+       \nTiges qui sont pourries ou putrides
+       \nRacines qui sont pourries ou putrides
+       \nFruits qui sont secs ou desséchés
+       \nFeuilles qui sont secs ou desséchés
+       \nTiges qui sont secs ou desséchés
+       \nRacines qui sont secs ou desséchés
+       \nFruits qui sont décolorés ou tachés
+       \nFeuilles qui sont décolorées ou tachées
+       \nTiges qui sont décolorées ou tachées
+       \nRacines qui sont décolorées ou tachées
+       \nFruits qui sont endommagés par le gel
+       \nFeuilles qui sont endommagées par le gel
+       \nTiges qui sont endommagées par le gel
+       \nRacines qui sont endommagées par le gel
+       \nFruits qui sont endommagés par la chaleur
+       \nFeuilles qui sont endommagées par la chaleur
+       \nTiges qui sont endommagées par la chaleur
+       \nRacines qui sont endommagées par la chaleur
+       \nFruits qui sont endommagés par la sécheresse
+       \nFeuilles qui sont endommagées par la sécheres

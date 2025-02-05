@@ -1,0 +1,117 @@
+       \nManque de nutriments
+       \nExcès d'eau
+       \nManque de lumière
+       \nTempérature élevée
+       \nMaladies fongiques
+       \nInsectes ravageurs
+       \nCarences en micronutriments
+       \nFertilisation excessive
+       \nSol acide
+       \nSol alcalin
+       \nManque de potassium
+       \nManque de magnésium
+       \nManque de calcium
+       \nExcès de sodium
+       \nExcès de chlorure
+       \nPrésence de métaux lourds
+       \nPrésence de pesticides
+       \nPrésence de herbicides
+       \nPrésence de fongicides
+       \nManque de drainage
+       \nExcès de pluie
+       \nSécheresse
+       \nTempérature basse
+       \nTempérature fluctuante
+       \nPrésence de ravageurs dans le sol
+       \nPrésence de maladies bactériennes
+       \nPrésence de virus
+       \nManque de pollinisation
+       \nPrésence de déchets végétaux infectés
+       \nPrésence de déchets animaux infectés
+       \nUtilisation de semences infectées
+       \nUtilisation de plants infectés
+       \nPrésence de champignons pathogènes
+       \nPrésence de bactéries pathogènes
+       \nPrésence de virus pathogènes
+       \nManque de rotation des cultures
+       \nUtilisation excessive de fertilisants
+       \nUtilisation excessive de pesticides
+       \nPrésence de déchets chimiques
+       \nPrésence de déchets radioactifs
+       \nManque de lumière pendant la période de floraison
+       \nTempérature élevée pendant la période de floraison
+       \nManque d'eau pendant la période de floraison
+       \nExcès de pluie pendant la période de floraison
+       \nPrésence de ravageurs pendant la période de floraison
+       \nManque de pollinisation pendant la période de floraison
+       \nUtilisation de pesticides pendant la période de floraison
+       \nPrésence de maladies bactériennes pendant la période de floraison
+       \nManque de calcium pendant la période de floraison
+       \nExcès de bore pendant la période de floraison
+       \nManque de magnésium pendant la période de floraison
+       \nExcès de potassium pendant la période de floraison
+       \nPrésence de déchets végétaux infectés pendant la période de floraison
+       \nPrésence de déchets animaux infectés pendant la période de floraison
+       \nUtilisation de semences infectées pendant la période de floraison
+       \nUtilisation de plants infectés pendant la période de floraison
+       \nPrésence de champignons pathogènes pendant la période de floraison
+       \nPrésence de bactéries pathogènes pendant la période de floraison
+       \nPrésence de virus pathogènes pendant la période de floraison
+       \nManque de rotation des cultures pendant la période de floraison
+       \nUtilisation excessive de fertilisants pendant la période de floraison
+       \nUtilisation excessive de pesticides pendant la période de floraison
+       \nPrésence de déchets chimiques pendant la période de floraison
+       \nPrésence de déchets radioactifs pendant la période de floraison
+       \nManque de lumière pendant la période de fructification
+       \nTempérature élevée pendant la période de fructification
+       \nManque d'eau pendant la période de fructification
+       \nExcès de pluie pendant la période de fructification
+       \nPrésence de ravageurs pendant la période de fructification
+       \nManque de pollinisation pendant la période de fructification
+       \nUtilisation de pesticides pendant la période de fructification
+       \nPrésence de maladies bactériennes pendant la période de fructification
+       \nManque de calcium pendant la période de fructification
+       \nExcès de bore pendant la période de fructification
+       \nManque de magnésium pendant la période de fructification
+       \nExcès de potassium pendant la période de fructification
+       \nPrésence de déchets v
+       \nPrésence de déchets animaux infectés pendant la période de fructification
+       \nUtilisation de semences infectées pendant la période de fructification
+       \nUtilisation de plants infectés pendant la période de fructification
+       \nPrésence de champignons pathogènes pendant la période de fructification
+       \nPrésence de bactéries pathogènes pendant la période de fructification
+       \nPrésence de virus pathogènes pendant la période de fructification
+       \nManque de rotation des cultures pendant la période de fructification
+       \nUtilisation excessive de fertilisants pendant la période de fructification
+       \nUtilisation excessive de pesticides pendant la période de fructification
+       \nPrésence de déchets chimiques pendant la période de fructification
+       \nPrésence de déchets radioactifs pendant la période de fructification
+       \nManque de lumière pendant la période de maturation
+       \nTempérature élevée pendant la période de maturation
+       \nManque d'eau pendant la période de maturation
+       \nExcès de pluie pendant la période de maturation
+Les causes de la déformation jaune des feuilles de tomates sont diverses et peuvent être attribuées à plusieurs facteurs, qu'ils soient biotiques ou abiotiques. L'une des causes les plus fréquentes est la carence en nutriments essentiels, notamment en azote, en magnésium et en fer. L'azote, étant un élément clé pour la croissance des plantes, joue un rôle majeur dans la formation de la chlorophylle. Une carence en azote entraîne un jaunissement général des feuilles, qui peut s'accompagner d'une déformation, particulièrement sur les feuilles les plus anciennes. Le magnésium, un autre nutriment essentiel, est crucial pour la photosynthèse, et sa carence provoque des taches jaunes entre les nervures des feuilles, souvent suivies d'une déformation. La carence en fer, quant à elle, affecte principalement les jeunes feuilles, qui deviennent jaunes avec des nervures restant relativement vertes. Ces carences peuvent être dues à des sols mal équilibrés, un pH inapproprié ou une mauvaise gestion de l'irrigation, qui empêche l'absorption adéquate des nutriments par les racines.
+
+Les infections fongiques sont également une cause commune de la déformation jaune des feuilles de tomates. Des maladies comme le mildiou et la fusariose peuvent entraîner des symptômes de jaunissement, souvent accompagnés de déformations. Le mildiou, causé par le champignon Phytophthora infestans, provoque des taches jaunes et brunes sur les feuilles, tandis que la fusariose, qui affecte les racines et la base de la plante, perturbe l'approvisionnement en eau et en nutriments, entraînant un jaunissement et une déformation des feuilles. De même, les maladies bactériennes, comme la tache bactérienne de la tomate, peuvent provoquer un jaunissement accompagné de déformation des feuilles, parfois en raison de la nécrose des tissus infectés.
+
+Les infestations d'insectes représentent une autre cause significative. Les pucerons, par exemple, se nourrissent de la sève des plantes de tomates, ce qui peut perturber leur développement. En plus de causer des déformations et du jaunissement des feuilles, les pucerons peuvent également transmettre des virus, aggravant ainsi les symptômes. D'autres insectes tels que les aleurodes ou les thrips peuvent également endommager les feuilles de tomates et entraîner un jaunissement et une déformation, en perturbant le métabolisme de la plante.
+
+Les conditions climatiques défavorables, notamment la chaleur excessive, la sécheresse ou un excès d'humidité, sont également responsables de la déformation jaune des feuilles. La chaleur excessive exerce un stress sur les plantes de tomates, affectant leur capacité à absorber l'eau et les nutriments nécessaires. Ce stress thermique entraîne un jaunissement et une déformation des feuilles, car la plante ne parvient pas à maintenir son équilibre hydrique. La sécheresse, en réduisant l'approvisionnement en eau, provoque un phénomène similaire, avec des feuilles qui se déforment et jaunissent en raison du manque de nutriments. À l'inverse, un excès d'humidité, en particulier lorsqu'il est combiné à une mauvaise circulation de l'air, favorise le développement de maladies fongiques, contribuant ainsi au jaunissement et à la déformation des feuilles.
+
+L'irrigation inadéquate, qu'elle soit excessive ou insuffisante, est une autre cause fréquente. Une irrigation excessive peut entraîner un asphyxie des racines, réduisant leur capacité à absorber l'oxygène et les nutriments. Cela provoque un jaunissement des feuilles et une déformation, en particulier si le sol devient saturé d'eau. À l'inverse, une irrigation insuffisante limite la disponibilité de l'eau et des nutriments, ce qui entraîne également des symptômes de jaunissement et de déformation. Un mauvais drainage du sol, en combinaison avec une irrigation excessive, peut aggraver la situation en favorisant la pourriture des racines et l'apparition de maladies.
+
+Une autre cause sous-jacente importante est l'excès d'engrais, notamment ceux riches en azote. Une fertilisation excessive, particulièrement en début de saison, peut entraîner une croissance excessive du feuillage au détriment de la production de fruits. Les feuilles peuvent devenir fragiles et jaunes, et leur déformation devient évidente. Un excès d'azote perturbe également l'équilibre nutritionnel de la plante, réduisant son efficacité dans l'absorption d'autres nutriments essentiels, ce qui contribue à la déformation et au jaunissement des feuilles.
+
+Les racines malades ou endommagées par des maladies telles que la verticilliose ou des infestations de nématodes peuvent également être responsables de la déformation jaune des feuilles. Les nématodes attaquent les racines de tomates, empêchant l'absorption d'eau et de nutriments, ce qui entraîne un jaunissement et une déformation des feuilles. De même, les racines affectées par des infections fongiques comme la verticilliose réduisent l'approvisionnement en eau et en éléments nutritifs, ce qui affecte la santé des feuilles.
+
+Les traitements chimiques mal appliqués, notamment les pesticides et les herbicides, peuvent aussi provoquer des symptômes de déformation jaune des feuilles. Une application excessive ou inappropriée de produits chimiques peut exercer un stress sur les plantes, entraînant des déformations, un jaunissement et, parfois, une chute prématurée des feuilles. Il est important de suivre les recommandations de dosage et d'appliquer les traitements avec précaution pour éviter de nuire aux plantes.
+
+Enfin, les problèmes liés à la génétique de la variété de tomate cultivée peuvent également jouer un rôle. Certaines variétés peuvent être plus sensibles aux facteurs environnementaux et aux maladies, ce qui les rend plus susceptibles de développer des symptômes de déformation jaune des feuilles. La sélection de variétés résistantes ou tolérantes aux maladies et aux conditions climatiques locales peut aider à réduire ces risques.
+       \nPrésence de ravageurs pendant la période de maturation
+       \nManque de pollinisation pendant la période de maturation
+       \nUtilisation de pesticides pendant la période de maturation
+       \nPrésence de maladies bactériennes pendant la période de maturation
+       \nManque de calcium pendant la période de maturation
+       \nExcès de bore pendant la période de maturation
+       \nManque de magnésium pendant la période de maturation
+       \nExcès de potassium pendant la période de maturation
