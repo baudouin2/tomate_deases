@@ -9,5 +9,7 @@ urlpatterns = [
     
     # Routes pour les recommandations basées sur YouTube
     path("api/youtube/", include("recommendations.urls", namespace="recommendations")),
+    
+    # Routes pour l'authentification
+    path('api/authentication/', include('authentication.urls', namespace="authentication")), 
 ]
-

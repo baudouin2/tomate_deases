@@ -1,28 +1,33 @@
 import os
 from pathlib import Path
 
-ROOT_URLCONF = 'backend.urls'
-
-# Définir la base du projet
+# Base du projet
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-SECRET_KEY = 'lh(5$$%wf+tf%m7%58x6o!52@x%n9y1)p5heq0(sp4sj@ro7ne'
+
+# Clé secrète, à ne jamais exposer en production
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'votre_clé_secrète')
 
 # Mode debug pour le développement
 DEBUG = True  # Passez à False en production
 
 # Hôtes autorisés
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']  # Ajoutez votre IP ou nom de domaine en production
+ALLOWED_HOSTS = ['*']
+
+# URL du projet principal
+ROOT_URLCONF = 'backend.urls'
 
 # Applications installées
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
-    "rest_framework",
+    "django.contrib.sessions",
+    "rest_framework",  # Django Rest Framework
+    "rest_framework_simplejwt",  # Authentification JWT
     "corsheaders",  # Middleware CORS
-    "django.contrib.sessions",  # Gestion des sessions utilisateur
     "chatbot",  # Application chatbot
     "diagnosis",  # Application de diagnostic
     "recommendations",  # Application de recommandations
+    "authentication",  # Application d'authentification
 ]
 
 # Middleware
@@ -36,11 +41,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Autoriser les requêtes du frontend (CORS)
+# CORS - Autoriser les requêtes provenant de n'importe quel frontend
 CORS_ALLOW_ALL_ORIGINS = True
 
-
-# Configuration de la base de données MongoDB avec Djongo
+# Base de données MongoDB via Djongo
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
@@ -48,30 +52,34 @@ DATABASES = {
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
             'host': 'mongodb://localhost:27017',
-            'username': os.getenv('MONGO_USER', ''),  # Utilisez des variables d'environnement si nécessaire
+            'username': os.getenv('MONGO_USER', ''),  # Utilisez des variables d'environnement
             'password': os.getenv('MONGO_PASSWORD', ''),
             'authSource': 'admin',  # Dépend de votre configuration MongoDB
         }
     }
 }
 
-# Configuration des fichiers statiques
+# Fichiers statiques (collecte, gestion)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# Configuration de l'API REST
+# Configuration de l'API REST avec les permissions globales
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ]
+        'rest_framework.permissions.AllowAny',  # Permet à tout le monde d'accéder aux API
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # Authentification JWT
+    ],
 }
 
-# Internationalisation
+# Internationalisation et fuseau horaire
 LANGUAGE_CODE = 'fr-fr'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Clé secrète pour Django (à sécuriser en production)
+# Sécurisation de la clé secrète de Django en environnement de production
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'votre_clé_secrète')
-
+# settings.py
+AUTH_USER_MODEL = 'authentication.CustomUser'

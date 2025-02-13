@@ -5,28 +5,30 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic", 
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#0A1F44" 
     },
     "ios": {
-  "supportsTablet": true,
-  "infoPlist": {
-    "NSPhotoLibraryUsageDescription": "Nous avons besoin d'accéder à vos photos pour sélectionner une image."
-      }
-    }
-,
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Nous avons besoin d'accéder à vos photos pour sélectionner une image."
+      },
+      "userInterfaceStyle": "automatic"
+    },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#0A1F44" 
+      },
+      "userInterfaceStyle": "automatic"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": ["expo-asset"]
   }
 }

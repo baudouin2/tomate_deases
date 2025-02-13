@@ -1,8 +1,8 @@
-from django.db import models
+from djongo import models
 
 class DiseaseDiagnosis(models.Model):
-    # Image de la tomate pour le diagnostic
-    tomato_image = models.ImageField(upload_to='tomato_images/')
+    # Image de la tomate pour le diagnostic (utilise un champ FileField pour MongoDB)
+    tomato_image = models.FileField(upload_to='tomato_images/')  # Utilisation de FileField au lieu de ImageField
     
     # Paramètres environnementaux
     humidity = models.FloatField()  # Humidité (80 à 95)
@@ -35,7 +35,7 @@ class DiseaseDiagnosis(models.Model):
     
     # Résultats du diagnostic
     diagnosis_result = models.TextField()  # Résultat du diagnostic
-    diagnosis_class = models.IntegerField()  # Classe du diagnostic (par exemple, type de maladie)
+    diagnosis_class = models.TextField(blank=False, null=False)  # Classe du diagnostic
     diagnosis_confidence = models.FloatField()  # Confiance du diagnostic (probabilité)
     
     # Date et heure du diagnostic
@@ -44,3 +44,8 @@ class DiseaseDiagnosis(models.Model):
     def __str__(self):
         return f"Diagnosis result for {self.tomato_image.name} on {self.timestamp}"
 
+    # Indexation pour MongoDB, si nécessaire
+    class Meta:
+        indexes = [
+            models.Index(fields=['timestamp'])  # Optimiser les requêtes basées sur la date du diagnostic
+        ]

@@ -1,96 +1,101 @@
-import React, { useState } from 'react';
-import { Button, View, StyleSheet, Alert, ImageBackground } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-
-// Fonction pour détecter le type MIME de l'image
-const getMimeType = (uri) => {
-  const extension = uri.split('.').pop().toLowerCase();
-  const mimeTypes = {
-    jpg: 'image/jpeg',
-    jpeg: 'image/jpeg',
-    png: 'image/png',
-    gif: 'image/gif',
-    bmp: 'image/bmp',
-  };
-  return mimeTypes[extension] || 'image/jpeg'; // Retourne 'image/jpeg' par défaut
-};
+import React, { useState, useEffect } from "react";
+import { View, Text, Image, StyleSheet, Alert, TouchableOpacity } from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import { useAppContext } from "../contexts/AppContext"; // Pour gérer le mode sombre
 
 const ImageUploader = ({ onImageSelected }) => {
   const [imageUri, setImageUri] = useState(null);
+  const [hasCameraPermission, setHasCameraPermission] = useState(null);
+  const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
+  const { theme } = useAppContext();
+  const isDarkMode = theme === "dark";
 
-  // Demande d'autorisation d'accès à la galerie
-  const requestPermission = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== 'granted') {
-      Alert.alert('Permission refusée', 'Vous devez donner l\'autorisation pour accéder à la galerie.');
-      return false;
+  useEffect(() => {
+    const checkPermissions = async () => {
+      try {
+        const cameraStatus = await ImagePicker.requestCameraPermissionsAsync();
+        const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        
+        setHasCameraPermission(cameraStatus.status === "granted");
+        setHasGalleryPermission(galleryStatus.status === "granted");
+      } catch (error) {
+        Alert.alert("Erreur", "Échec de la demande de permission");
+        console.error("Erreur de permission : ", error);
+      }
+    };
+
+    checkPermissions();
+  }, []);
+
+  const selectImageFromGallery = async () => {
+    if (!hasGalleryPermission) {
+      Alert.alert("Permission refusée", "L'application n'a pas la permission d'accéder à la galerie.");
+      return;
     }
-    return true;
-  };
-
-  // Sélectionner une image depuis la galerie
-  const pickImage = async () => {
-    const hasPermission = await requestPermission();
-    if (!hasPermission) return;
 
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaType: ImagePicker.MediaTypeOptions.Photo,
+      allowsEditing: true,
+      aspect: [4, 3],
       quality: 1,
     });
 
-    if (result.cancelled) {
-      console.log('Sélection annulée par l’utilisateur');
-    } else {
-      // Mise à jour de l'URI de l'image et appel du callback onImageSelected
-      setImageUri(result.uri);
-      onImageSelected(result.uri);
-      uploadImage(result.uri);
-    }
+    handleImageResult(result);
   };
 
-  // Fonction pour uploader l'image via FormData
-  const uploadImage = async (uri) => {
-    const formData = new FormData();
-    const mimeType = getMimeType(uri); // Détecte le type MIME de l'image
-    const imageName = `image.${uri.split('.').pop()}`; // Nom de l'image avec extension
+  const takePhoto = async () => {
+    if (!hasCameraPermission) {
+      Alert.alert("Permission refusée", "L'application n'a pas la permission d'utiliser la caméra.");
+      return;
+    }
 
-    formData.append('image', {
-      uri,
-      type: mimeType,
-      name: imageName,
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
 
-    try {
-      const response = await fetch('YOUR_BACKEND_URL_HERE', {
-        method: 'POST',
-        body: formData,
-      });
+    handleImageResult(result);
+  };
 
-      if (!response.ok) {
-        throw new Error('Erreur lors de l\'envoi de l\'image');
-      }
-
-      const result = await response.json();
-      console.log('Réponse de l\'API:', result);
-    } catch (error) {
-      console.error('Erreur lors du téléchargement de l\'image:', error);
-      Alert.alert('Erreur', 'Une erreur est survenue lors du téléchargement de l\'image.');
+  const handleImageResult = (result) => {
+    if (result.canceled || !result.assets?.length) {
+      console.log("Sélection d'image annulée.");
+      return;
     }
+
+    const selectedImageUri = result.assets[0].uri;
+    setImageUri(selectedImageUri);
+    onImageSelected({
+      uri: selectedImageUri,
+      type: getMimeType(selectedImageUri),
+      fileName: `image.${selectedImageUri.split('.').pop()}`,
+    });
+    console.log("Image sélectionnée : ", selectedImageUri);
+  };
+
+  const getMimeType = (uri) => {
+    const extension = uri.split(".").pop();
+    const mimeTypes = {
+      jpg: "image/jpeg",
+      png: "image/png",
+      jpeg: "image/jpeg",
+    };
+    return mimeTypes[extension] || "image/jpeg";
   };
 
   return (
-    <View style={styles.container}>
-      <Button title="Choisir une image" onPress={pickImage} />
+    <View style={[styles.container, { backgroundColor: isDarkMode ? "#1E1E1E" : "#FFF" }]}>
+      <TouchableOpacity style={[styles.button, isDarkMode && styles.buttonDark]} onPress={takePhoto}>
+        <Text style={styles.buttonText}>📷 Prendre une photo</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.button, isDarkMode && styles.buttonDark]} onPress={selectImageFromGallery}>
+        <Text style={styles.buttonText}>🖼️ Choisir depuis la galerie</Text>
+      </TouchableOpacity>
+
       {imageUri && (
-        <ImageBackground
-          source={{ uri: imageUri }}
-          style={styles.image}
-          imageStyle={{ borderRadius: 10 }}
-        >
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Button title="Image chargée" disabled />
-          </View>
-        </ImageBackground>
+        <View style={styles.imageContainer}>
+          <Image source={{ uri: imageUri }} style={styles.image} />
+        </View>
       )}
     </View>
   );
@@ -98,15 +103,36 @@ const ImageUploader = ({ onImageSelected }) => {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    marginVertical: 10,
+    alignItems: "center",
+    padding: 20,
+    borderRadius: 10,
+  },
+  button: {
+    backgroundColor: "#4A90E2",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 25,
+    marginVertical: 5,
+    alignItems: "center",
+    width: 250,
+  },
+  buttonDark: {
+    backgroundColor: "#81C784",
+  },
+  buttonText: {
+    color: "#FFF",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  imageContainer: {
+    alignItems: "center",
+    marginTop: 10,
   },
   image: {
-    width: 200,
-    height: 200,
+    width: 250,
+    height: 250,
     marginTop: 10,
     borderRadius: 10,
-    overflow: 'hidden',
   },
 });
 

@@ -1,10 +1,10 @@
-       \nFeuilles jaunes ou décolorées
-       \nFeuilles déformées ou bosselées
-       \nPerte de feuilles
-       \nRalentissement de la croissance
-       \nFruits déformés ou endommagés
-       \nTaches noires sur les feuilles
-       \nFeuilles qui se recroquevillent
+       .Feuilles jaunes ou décolorées
+       .Feuilles déformées ou bosselées
+       .Perte de feuilles
+       .Ralentissement de la croissance
+       .Fruits déformés ou endommagés
+       .Taches noires sur les feuilles
+       .Feuilles qui se recroquevillent
        Les conséquences de la déformation jaune des feuilles de tomates sont multiples et peuvent avoir un impact significatif sur la santé générale de la plante et la productivité de la culture. L'une des principales conséquences est la réduction de la capacité photosynthétique de la plante. Les feuilles de tomate, en étant le principal site de la photosynthèse, sont essentielles pour la production de sucres nécessaires à la croissance et au développement de la plante. Lorsque ces feuilles jaunissent et se déforment, leur capacité à capter la lumière et à produire de la nourriture pour la plante est réduite. Cela entraîne une croissance ralentie et, dans certains cas, un retard dans la maturation des fruits.
 
 Une autre conséquence est la diminution de la résistance aux maladies. Les feuilles de tomate déformées et affaiblies sont plus vulnérables aux attaques d'agents pathogènes, qu'ils soient fongiques, bactériens ou viraux. Par exemple, les maladies comme le mildiou et la fusariose peuvent se propager plus rapidement sur des feuilles déjà fragilisées par un jaunissement ou une déformation. De plus, un stress chronique dû à des feuilles déformées rend les plantes plus sensibles à d'autres infections opportunistes. Cela peut entraîner des infections secondaires qui, à leur tour, aggravent l'état général de la plante.
@@ -47,46 +47,46 @@ Les tomates saines ne montrent aucun signe de stress visible, tel que des feuill
 Les tomates en bonne santé possèdent également une bonne capacité à se régénérer. Si elles sont exposées à des stress modérés, comme des températures plus élevées ou des irrégularités dans l'irrigation, elles sont capables de se remettre rapidement et de reprendre leur croissance normale. Cela est dû à un métabolisme équilibré, qui permet à la plante de fonctionner de manière optimale même sous des conditions sous-optimales.
 
 En résumé, les caractéristiques des tomates saines sont visibles dans leur apparence générale : des feuilles vertes et fermes, des tiges solides, des racines bien développées, des fleurs bien formées et des fruits de bonne qualité. Ces plantes sont moins sensibles aux maladies et au stress, et leur rendement est généralement élevé, avec une production régulière de fruits de qualité.
-       \nTiges qui se dessèchent
-       \nRacines qui se putréfient
-       \nFruits qui ne mûrissent pas
-       \nFeuilles qui deviennent cireuses
-       \nTaches blanches ou grises sur les feuilles
-       \nFeuilles qui se décolorent
-       \nPerte de vigueur
-       \nRalentissement de la production de fruits
-       \nFruits qui sont plus petits que la normale
-       \nFeuilles qui sont plus grandes que la normale
-       \nTiges qui sont plus longues que la normale
-       \nRacines qui sont plus profondes que la normale
-       \nFruits qui sont déformés ou bosselés
-       \nFeuilles qui sont déchirées ou lacérées
-       \nTiges qui sont cassées ou brisées
-       \nRacines qui sont endommagées ou pourries
-       \nFruits qui sont infestés de ravageurs
-       \nFeuilles qui sont infestées de ravageurs
-       \nTiges qui sont infestées de ravageurs
-       \nRacines qui sont infestées de ravageurs
-       \nFruits qui sont pourris ou putrides
-       \nFeuilles qui sont pourries ou putrides
-       \nTiges qui sont pourries ou putrides
-       \nRacines qui sont pourries ou putrides
-       \nFruits qui sont secs ou desséchés
-       \nFeuilles qui sont secs ou desséchés
-       \nTiges qui sont secs ou desséchés
-       \nRacines qui sont secs ou desséchés
-       \nFruits qui sont décolorés ou tachés
-       \nFeuilles qui sont décolorées ou tachées
-       \nTiges qui sont décolorées ou tachées
-       \nRacines qui sont décolorées ou tachées
-       \nFruits qui sont endommagés par le gel
-       \nFeuilles qui sont endommagées par le gel
-       \nTiges qui sont endommagées par le gel
-       \nRacines qui sont endommagées par le gel
-       \nFruits qui sont endommagés par la chaleur
-       \nFeuilles qui sont endommagées par la chaleur
-       \nTiges qui sont endommagées par la chaleur
-       \nRacines qui sont endommagées par la chaleur
-       \nFruits qui sont endommagés par la sécheresse
-       \nFeuilles qui sont endommagées par la sécheresse
-       \nTiges qui sont endommagées par la sécheresse
+       .Tiges qui se dessèchent
+       .Racines qui se putréfient
+       .Fruits qui ne mûrissent pas
+       .Feuilles qui deviennent cireuses
+       .Taches blanches ou grises sur les feuilles
+       .Feuilles qui se décolorent
+       .Perte de vigueur
+       .Ralentissement de la production de fruits
+       .Fruits qui sont plus petits que la normale
+       .Feuilles qui sont plus grandes que la normale
+       .Tiges qui sont plus longues que la normale
+       .Racines qui sont plus profondes que la normale
+       .Fruits qui sont déformés ou bosselés
+       .Feuilles qui sont déchirées ou lacérées
+       .Tiges qui sont cassées ou brisées
+       .Racines qui sont endommagées ou pourries
+       .Fruits qui sont infestés de ravageurs
+       .Feuilles qui sont infestées de ravageurs
+       .Tiges qui sont infestées de ravageurs
+       .Racines qui sont infestées de ravageurs
+       .Fruits qui sont pourris ou putrides
+       .Feuilles qui sont pourries ou putrides
+       .Tiges qui sont pourries ou putrides
+       .Racines qui sont pourries ou putrides
+       .Fruits qui sont secs ou desséchés
+       .Feuilles qui sont secs ou desséchés
+       .Tiges qui sont secs ou desséchés
+       .Racines qui sont secs ou desséchés
+       .Fruits qui sont décolorés ou tachés
+       .Feuilles qui sont décolorées ou tachées
+       .Tiges qui sont décolorées ou tachées
+       .Racines qui sont décolorées ou tachées
+       .Fruits qui sont endommagés par le gel
+       .Feuilles qui sont endommagées par le gel
+       .Tiges qui sont endommagées par le gel
+       .Racines qui sont endommagées par le gel
+       .Fruits qui sont endommagés par la chaleur
+       .Feuilles qui sont endommagées par la chaleur
+       .Tiges qui sont endommagées par la chaleur
+       .Racines qui sont endommagées par la chaleur
+       .Fruits qui sont endommagés par la sécheresse
+       .Feuilles qui sont endommagées par la sécheresse
+       .Tiges qui sont endommagées par la sécheresse

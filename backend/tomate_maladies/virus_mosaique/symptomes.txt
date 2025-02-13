@@ -1,13 +1,13 @@
-       \nTaches jaunes ou blanches sur les feuilles
-       \nFeuilles déformées ou bosselées
-       \nPerte de feuilles
-       \nRalentissement de la croissance
-       \nFruits déformés ou endommagés
-       \nTaches noires sur les fruits
-       \nFruits qui pourrissent rapidement
-       \nFeuilles qui se recroquevillent
-       \nTiges qui se dessèchent
-       \nRacines qui se putréfient
+Taches jaunes ou blanches sur les feuilles
+Feuilles déformées ou bosselées
+Perte de feuilles
+Ralentissement de la croissance
+Fruits déformés ou endommagés
+Taches noires sur les fruits
+Fruits qui pourrissent rapidement
+Feuilles qui se recroquevillent
+Tiges qui se dessèchent
+Racines qui se putréfient
        Les conséquences du virus de la mosaïque de la tomate peuvent être graves et affecter plusieurs aspects de la culture, de la production à la rentabilité des exploitations agricoles. Tout d’abord, l’un des impacts les plus visibles est la dégradation de la qualité des fruits. Les tomates infectées présentent souvent des taches jaunes ou blanchâtres caractéristiques, ainsi que des déformations qui rendent les fruits moins attrayants pour le marché. La dégradation de l'apparence des tomates diminue leur valeur commerciale et rend les fruits moins susceptibles d'être vendus à un prix compétitif. De plus, cette altération de l'apparence peut réduire la durée de conservation des fruits, les rendant plus vulnérables à des détériorations prématurées.
 
 En plus de l'aspect visuel, les tomates touchées par le virus peuvent souffrir de retards de maturation, ce qui signifie qu'elles prennent plus de temps pour atteindre leur pleine maturité. Ce retard dans la maturation des fruits peut entraîner une récolte moins homogène et créer des problèmes pour les producteurs qui souhaitent vendre leurs produits à un moment optimal. Les producteurs peuvent être contraints de récolter les fruits avant qu'ils ne soient complètement mûrs, ce qui affecte la qualité du produit final et peut entraîner une perte de rendement. En conséquence, la rentabilité des exploitations peut être considérablement réduite.
@@ -29,43 +29,43 @@ Les conséquences de cette maladie virale ne se limitent pas seulement aux perte
 Enfin, les conséquences du virus de la mosaïque de la tomate peuvent avoir un impact sur la sécurité alimentaire à l'échelle locale et nationale. La réduction des rendements et de la qualité des récoltes peut entraîner une pénurie de tomates disponibles pour la consommation, ce qui peut faire augmenter les prix des tomates sur le marché. Pour les communautés qui dépendent de la tomate comme source alimentaire de base ou pour la production de sauces et de conserves, une baisse de l'offre peut causer des problèmes d'approvisionnement alimentaire, augmentant ainsi les coûts pour les consommateurs et les producteurs.
 
 En résumé, les conséquences du virus de la mosaïque de la tomate sont multiples et affectent de nombreux aspects de la culture. La baisse de la qualité des fruits, la réduction des rendements, l'augmentation des coûts de production, la dégradation de la réputation des producteurs, ainsi que les impacts environnementaux et sur la sécurité alimentaire sont des conséquences majeures de cette maladie virale. La gestion du virus nécessite une vigilance constante et des stratégies de prévention rigoureuses pour limiter son impact sur les cultures et sur l’économie agricole.
-       \nFruits qui ne mûrissent pas
-       \nFeuilles qui deviennent cireuses
-       \nTaches blanches ou grises sur les feuilles
-       \nFeuilles qui se décolorent
-       \nPerte de vigueur
-       \nRalentissement de la production de fruits
-       \nFruits qui sont plus petits que la normale
-       \nFeuilles qui sont plus grandes que la normale
-       \nTiges qui sont plus longues que la normale
-       \nRacines qui sont plus profondes que la normale
-       \nFruits qui sont déformés ou bosselés
-       \nFeuilles qui sont déchirées ou lacérées
-       \nTiges qui sont cassées ou brisées
-       \nRacines qui sont endommagées ou pourries
-       \nFruits qui sont infestés de ravageurs
-       \nFeuilles qui sont infestées de ravageurs
-       \nTiges qui sont infestées de ravageurs
-       \nRacines qui sont infestées de ravageurs
-       \nFruits qui sont pourris ou putrides
-       \nFeuilles qui sont pourries ou putrides
-       \nTiges qui sont pourries ou putrides
-       \nRacines qui sont pourries ou putrides
-       \nFuits qui sont secs ou desséchés
-       \nFeuilles qui sont secs ou desséchés
-       \nTiges qui sont secs ou desséchés
-       \nRacines qui sont secs ou desséchés
-       \nFruits qui sont décolorés ou tachés
-       \nFeuilles qui sont décolorées ou tachées
-       \nTiges qui sont décolorées ou tachées
-       \nRacines qui sont décolorées ou tachées
-       \nFruits qui sont endommagés par le gel
-       \nFeuilles qui sont endommagées par le gel
-       \nTiges qui sont endommagées par le gel
-       \nRacines qui sont endommagées par le gel
-       \nFruits qui sont endommagés par la chaleur
-       \nFeuilles qui sont endommagées par la chaleur
-       \nTiges qui sont endommagées par la chaleur
-       \nRacines qui sont endommagées par la chaleur
-       \nFruits qui sont endommagés par la sécheresse
-       \nFeuilles qui sont endommagées par la sécheresse
+Fruits qui ne mûrissent pas
+Feuilles qui deviennent cireuses
+Taches blanches ou grises sur les feuilles
+Feuilles qui se décolorent
+Perte de vigueur
+Ralentissement de la production de fruits
+Fruits qui sont plus petits que la normale
+Feuilles qui sont plus grandes que la normale
+Tiges qui sont plus longues que la normale
+Racines qui sont plus profondes que la normale
+Fruits qui sont déformés ou bosselés
+Feuilles qui sont déchirées ou lacérées
+Tiges qui sont cassées ou brisées
+Racines qui sont endommagées ou pourries
+Fruits qui sont infestés de ravageurs
+Feuilles qui sont infestées de ravageurs
+Tiges qui sont infestées de ravageurs
+Racines qui sont infestées de ravageurs
+Fruits qui sont pourris ou putrides
+Feuilles qui sont pourries ou putrides
+Tiges qui sont pourries ou putrides
+Racines qui sont pourries ou putrides
+Fuits qui sont secs ou desséchés
+Feuilles qui sont secs ou desséchés
+Tiges qui sont secs ou desséchés
+Racines qui sont secs ou desséchés
+Fruits qui sont décolorés ou tachés
+Feuilles qui sont décolorées ou tachées
+Tiges qui sont décolorées ou tachées
+Racines qui sont décolorées ou tachées
+Fruits qui sont endommagés par le gel
+Feuilles qui sont endommagées par le gel
+Tiges qui sont endommagées par le gel
+Racines qui sont endommagées par le gel
+Fruits qui sont endommagés par la chaleur
+Feuilles qui sont endommagées par la chaleur
+Tiges qui sont endommagées par la chaleur
+Racines qui sont endommagées par la chaleur
+Fruits qui sont endommagés par la sécheresse
+Feuilles qui sont endommagées par la sécheresse

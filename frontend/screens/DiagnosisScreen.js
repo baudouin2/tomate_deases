@@ -2,90 +2,100 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  Button,
-  ActivityIndicator,
-  Alert,
-  StyleSheet,
-  ScrollView,
   Image,
   TouchableOpacity,
+  Alert,
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
 } from "react-native";
 import ImageUploader from "../components/ImageUploader";
 import AgricultureInfoButtons from "../components/AgricultureInfoButtons";
-import { diagnoseDisease } from "../services/api";
-import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../util/constants";
-
-// Import du icon (assurez-vous que le chemin du icon est correct)
-import icon from "../assets/icon.png";  
+import { uploadImageData } from "../services/api";
+import { useAppContext } from "../contexts/AppContext"; // Utilisation du contexte global
+import icon from "../assets/icon.png";
 
 const DiagnosisScreen = () => {
-  const [diagnosis, setDiagnosis] = useState(null);
+  const { theme } = useAppContext(); // Récupération du thème
+  const isDarkMode = theme === "dark";
+
   const [imageUri, setImageUri] = useState(null);
   const [agricultureData, setAgricultureData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [diagnosis, setDiagnosis] = useState(null);
 
   const handleDiagnose = async () => {
     if (!imageUri || Object.keys(agricultureData).length === 0) {
       Alert.alert("Erreur", "Veuillez fournir une image et les données agricoles.");
+      console.log("Erreur : Image ou données agricoles manquantes.");
       return;
     }
 
     setLoading(true);
     try {
-      const { humidity, temperature, soilType, shadingLevel, plantationDensity, irrigationFrequency } = agricultureData;
-
-      if (!humidity || !temperature || !soilType || !shadingLevel || !plantationDensity || !irrigationFrequency) {
-        Alert.alert("Erreur", "Veuillez remplir tous les champs des données agricoles.");
-        setLoading(false);
-        return;
-      }
-
-      const response = await diagnoseDisease(imageUri, {
-        humidity,
-        temperature,
-        soil_type: soilType,
-        shading_level: shadingLevel,
-        plantation_density: plantationDensity,
-        irrigation_frequency: irrigationFrequency,
-      });
-
-      setDiagnosis(response.data);
-      Alert.alert("Succès", SUCCESS_MESSAGES.DIAGNOSIS_SUCCESS);
+      console.log("Diagnostic en cours...");
+      const result = await uploadImageData(imageUri, agricultureData);
+      setDiagnosis(result);
+      console.log("Diagnostic réussi : ", result);
     } catch (error) {
-      console.error(error);
-      Alert.alert("Erreur", ERROR_MESSAGES.DIAGNOSIS_FAILED);
+      Alert.alert("Erreur", "Le diagnostic a échoué. Veuillez réessayer.");
+      console.error("Erreur de diagnostic : ", error);
     } finally {
       setLoading(false);
+      console.log("Chargement terminé.");
     }
   };
 
+  const handleAgricultureDataChange = (key, value) => {
+    setAgricultureData((prevData) => ({
+      ...prevData,
+      [key]: value,
+    }));
+    console.log(`Donnée agricole modifiée : ${key} = ${value}`);
+  };
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {/* En-tête avec icon */}
-      <View style={styles.header}>
+    <ScrollView contentContainerStyle={[styles.container, { backgroundColor: isDarkMode ? "#0A1F44" : "#F5F7FA" }]}>
+      {/* HEADER */}
+      <View style={[styles.header, { backgroundColor: isDarkMode ? "#1E3A8A" : "#4CAF50" }]}>
         <Image source={icon} style={styles.icon} />
-        <Text style={styles.title}>AgroTom</Text>
+        <Text style={[styles.title, { color: isDarkMode ? "#FFF" : "#FFF" }]}>AgroTom</Text>
       </View>
 
-      <ImageUploader onImageSelect={setImageUri} />
-      <AgricultureInfoButtons onChange={setAgricultureData} />
+      {/* UPLOAD IMAGE */}
+      <ImageUploader onImageSelected={setImageUri} />
+      {imageUri && <Image source={{ uri: imageUri }} style={styles.imagePreview} />}
 
-      {/* Bouton stylisé */}
+      <Text style={[styles.infoText, { color: isDarkMode ? "#BBB" : "#333" }]}>
+        Veuillez entrer les informations relatives aux conditions de culture des tomates :
+      </Text>
+
+      {/* INPUTS AGRICULTURE */}
+      <AgricultureInfoButtons onChange={handleAgricultureDataChange} data={agricultureData} />
+
+      {/* BOUTON DE DIAGNOSTIC */}
       <TouchableOpacity
-        style={[styles.button, loading && styles.buttonDisabled]}
+        style={[
+          styles.button,
+          { backgroundColor: isDarkMode ? "#007BFF" : "#4CAF50" },
+          loading && styles.buttonDisabled,
+        ]}
         onPress={handleDiagnose}
         disabled={loading}
       >
         <Text style={styles.buttonText}>{loading ? "Analyse en cours..." : "Diagnostiquer"}</Text>
       </TouchableOpacity>
 
-      {loading && <ActivityIndicator size="large" color="#00AAFF" style={styles.loader} />}
+      {loading && <ActivityIndicator size="large" color={isDarkMode ? "#007BFF" : "#4CAF50"} style={styles.loader} />}
 
+      {/* AFFICHAGE DES RÉSULTATS */}
       {diagnosis && (
-        <View style={styles.resultContainer}>
-          <Text style={styles.resultTitle}>Résultat du Diagnostic :</Text>
-          <Text style={styles.resultText}>{diagnosis.result}</Text>
-          <Text style={styles.resultText}>Conseils : {diagnosis.recommendation}</Text>
+        <View style={[styles.resultContainer, { backgroundColor: isDarkMode ? "#1E3A8A" : "#FFF" }]}>
+          <Text style={[styles.resultTitle, { color: isDarkMode ? "#FFF" : "#333" }]}>Résultat :</Text>
+          <Text style={[styles.resultText, { color: isDarkMode ? "#FFF" : "#333" }]}>
+            {diagnosis.class} à {diagnosis.confidence}%
+          </Text>
+          <Text style={[styles.resultText, { color: isDarkMode ? "#FFF" : "#333" }]}>Conseils : {diagnosis.recommendation}</Text>
         </View>
       )}
     </ScrollView>
@@ -96,76 +106,69 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 20,
-    backgroundColor: "#F5F5F5",
     alignItems: "center",
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#4A90E2",
     padding: 15,
     borderRadius: 10,
-    width: "100%",
-    marginBottom: 15,
-    elevation: 3, // Ombre Android
-    shadowColor: "#000", // Ombre iOS
-    shadowOpacity: 0.3,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
+    marginBottom: 20,
   },
   icon: {
     width: 50,
     height: 50,
-    resizeMode: "contain",
     marginRight: 10,
   },
   title: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
-    color: "#FFFFFF",
   },
-  button: {
-    backgroundColor: "#4A90E2",
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 25,
-    marginTop: 20,
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 1 },
-    shadowRadius: 3,
+  imagePreview: {
+    width: 250,
+    height: 250,
+    marginVertical: 20,
+    borderRadius: 10,
   },
-  buttonDisabled: {
-    backgroundColor: "#A9CCE3",
-  },
-  buttonText: {
-    color: "#FFFFFF",
+  infoText: {
     fontSize: 16,
     fontWeight: "bold",
+    marginVertical: 10,
     textAlign: "center",
   },
+  button: {
+    padding: 15,
+    alignItems: "center",
+    borderRadius: 5,
+    width: "100%",
+  },
+  buttonDisabled: {
+    backgroundColor: "#A5D6A7",
+  },
+  buttonText: {
+    color: "#FFF",
+    fontWeight: "bold",
+  },
   loader: {
-    marginVertical: 15,
+    marginVertical: 10,
   },
   resultContainer: {
-    backgroundColor: "#E8F4F8",
-    padding: 15,
-    borderRadius: 10,
     marginTop: 20,
+    padding: 15,
+    borderRadius: 5,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
     width: "100%",
-    elevation: 2,
+    alignItems: "center",
   },
   resultTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 5,
-    color: "#007ACC",
+    marginBottom: 10,
   },
   resultText: {
     fontSize: 16,
-    color: "#333333",
-    marginBottom: 5,
   },
 });
 
