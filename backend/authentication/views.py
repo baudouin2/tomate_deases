@@ -1,9 +1,11 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import check_password
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import CustomUser
+
+CustomUser = get_user_model()
 
 class UserAuthView(APIView):
     def post(self, request, *args, **kwargs):
@@ -29,8 +31,7 @@ class UserAuthView(APIView):
             return Response({"detail": "Nom d'utilisateur déjà utilisé"}, status=status.HTTP_400_BAD_REQUEST)
         
         user = CustomUser.objects.create_user(
-            username=full_name,  # Utilisé pour l'authentification
-            full_name=full_name,
+            full_name=full_name,  
             password=password
         )
         
@@ -41,11 +42,15 @@ class UserAuthView(APIView):
 
     def login_user(self, full_name, password):
         """Connexion avec `full_name` et un mot de passe à 5 chiffres."""
-        if not password:
-            return Response({"detail": "Mot de passe requis"}, status=status.HTTP_400_BAD_REQUEST)
+        if not full_name or not password:
+            return Response({"detail": "Nom complet et mot de passe requis"}, status=status.HTTP_400_BAD_REQUEST)
         
-        user = authenticate(username=full_name, password=password)
-        if user:
+        try:
+            user = CustomUser.objects.get(full_name=full_name)
+        except CustomUser.DoesNotExist:
+            return Response({"detail": "Identifiants incorrects"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if check_password(password, user.password):
             refresh = RefreshToken.for_user(user)
             return Response({
                 'access': str(refresh.access_token),

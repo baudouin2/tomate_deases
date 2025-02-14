@@ -1,65 +1,75 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { View, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HomeScreen from './screens/HomeScreen';
-import LoginScreen from './screens/LoginScreen';  // Assurez-vous d'importer l'écran de connexion
+import LoginScreen from './screens/LoginScreen';
 import DiagnosisScreen from './screens/DiagnosisScreen';
 import ChatScreen from './screens/ChatScreen';
 import { AppProvider, useAppContext, lightTheme, darkTheme } from './contexts/AppContext';
-import Icon from 'react-native-vector-icons/Feather'; // Import des icônes
+import Icon from 'react-native-vector-icons/Feather';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
-const ThemedApp = () => {
+// 📌 **1. Navigation principale après connexion**
+const MainTabs = () => {
   const { theme, toggleTheme } = useAppContext();
   const currentTheme = theme === 'light' ? lightTheme : darkTheme;
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Vérifier le token de l'utilisateur au démarrage
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: currentTheme.background },
+        headerTintColor: currentTheme.text,
+        tabBarStyle: { backgroundColor: currentTheme.background },
+        tabBarActiveTintColor: currentTheme.button,
+        headerRight: () => (
+          <TouchableOpacity onPress={toggleTheme} style={styles.themeButton}>
+            <Icon name={theme === 'light' ? 'moon' : 'sun'} size={24} color={currentTheme.text} />
+          </TouchableOpacity>
+        ),
+      }}
+    >
+      <Tab.Screen name="Accueil" component={HomeScreen} />
+      <Tab.Screen name="Diagnostic" component={DiagnosisScreen} />
+      <Tab.Screen name="Chatbot" component={ChatScreen} />
+    </Tab.Navigator>
+  );
+};
+
+// 📌 **2. Stack pour la connexion (Login uniquement)**
+const AuthStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="Login" component={LoginScreen} />
+  </Stack.Navigator>
+);
+
+// 📌 **3. Gestion de l'authentification**
+const ThemedApp = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
+
   useEffect(() => {
     const checkAuth = async () => {
-      const token = await AsyncStorage.getItem('accessToken');
-      if (token) {
-        setIsAuthenticated(true);  // Utilisateur déjà connecté
-      } else {
-        setIsAuthenticated(false);  // Aucun token, donc non connecté
-      }
+      const token = await AsyncStorage.getItem('access_token');
+      setIsAuthenticated(!!token); // Convertit en booléen
     };
     checkAuth();
   }, []);
 
+  if (isAuthenticated === null) {
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="large" color="#3498db" />
+      </View>
+    );
+  }
+
   return (
     <NavigationContainer>
-      <View style={[styles.container, { backgroundColor: currentTheme.background }]}>
-        {isAuthenticated ? (
-          <Tab.Navigator
-            screenOptions={{
-              headerStyle: { backgroundColor: currentTheme.background },
-              headerTintColor: currentTheme.text,
-              tabBarStyle: { backgroundColor: currentTheme.background },
-              tabBarActiveTintColor: currentTheme.button,
-              headerRight: () => (
-                <TouchableOpacity onPress={toggleTheme} style={styles.themeButton}>
-                  <Icon
-                    name={theme === 'light' ? 'moon' : 'sun'} // Soleil pour le mode clair, lune pour le mode sombre
-                    size={24}
-                    color={currentTheme.text}
-                  />
-                </TouchableOpacity>
-              ),
-            }}
-          >
-            <Tab.Screen name="Accueil" component={HomeScreen} />
-            <Tab.Screen name="Diagnostic" component={DiagnosisScreen} />
-            <Tab.Screen name="Chatbot" component={ChatScreen} />
-          </Tab.Navigator>
-        ) : (
-          // Si l'utilisateur n'est pas connecté, rediriger vers l'écran de connexion
-          <LoginScreen />
-        )}
-      </View>
+      {isAuthenticated ? <MainTabs /> : <AuthStack />}
     </NavigationContainer>
   );
 };
@@ -73,6 +83,6 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
   themeButton: { marginRight: 15 },
+  loaderContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
 });

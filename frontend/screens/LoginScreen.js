@@ -23,15 +23,16 @@ const LoginScreen = ({ navigation }) => {
 
     try {
       const response = await loginUser(fullName, password);
+      
       if (response?.access) {
-        login(response.user, response.access);
+        await login(response.user, response.access); // Stocke le token et met à jour le contexte
         navigation.replace('Home');
       } else {
         setError(response?.detail || 'Identifiants incorrects');
       }
     } catch (err) {
       console.error("Erreur lors de la connexion:", err);
-      setError("Impossible de contacter le serveur. Vérifiez votre connexion.");
+      setError(err.message || "Impossible de contacter le serveur.");
     }
 
     setLoading(false);
@@ -69,7 +70,7 @@ const LoginScreen = ({ navigation }) => {
       }
     } catch (err) {
       console.error("Erreur lors de l'inscription:", err);
-      setError("Impossible de contacter le serveur. Vérifiez votre connexion.");
+      setError(err.message || "Impossible de contacter le serveur.");
     }
 
     setLoading(false);
@@ -93,9 +94,9 @@ const LoginScreen = ({ navigation }) => {
           )}
 
           {!isRegistering && <Button title="Se connecter" onPress={handleLogin} />}
-          
+
           {error && <Text style={styles.error}>{error}</Text>}
-          
+
           <Text style={styles.toggleText} onPress={() => { 
             setIsRegistering(!isRegistering); 
             setError(null); 
@@ -103,7 +104,7 @@ const LoginScreen = ({ navigation }) => {
           }}>
             {isRegistering ? 'Vous avez déjà un compte ? Connectez-vous' : 'Pas de compte ? Créez-en un'}
           </Text>
-          
+
           {loading && <ActivityIndicator size="large" color="#3498db" style={styles.loader} />}
         </View>
       </TouchableWithoutFeedback>
@@ -111,6 +112,7 @@ const LoginScreen = ({ navigation }) => {
   );
 };
 
+// Composant réutilisable pour les champs de saisie
 const InputField = ({ label, ...props }) => (
   <View style={styles.inputWrapper}>
     <Text style={styles.label}>{label}</Text>
@@ -118,6 +120,7 @@ const InputField = ({ label, ...props }) => (
   </View>
 );
 
+// Styles
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: '#f7f7f7' },
   innerContainer: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: 'white', borderRadius: 10, elevation: 5 },

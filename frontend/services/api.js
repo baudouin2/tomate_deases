@@ -15,7 +15,7 @@ const sendPostRequest = async (url, data) => {
     return response.data;
   } catch (error) {
     console.error(`Erreur lors de l'envoi des données à ${url}:`, error?.response?.data || error.message);
-    throw new Error(error?.response?.data?.message || "Erreur réseau");
+    throw new Error(error?.response?.data?.detail || "Erreur réseau");
   }
 };
 
@@ -48,34 +48,27 @@ export const registerUser = async (fullName, password) => {
 // Connexion utilisateur
 export const loginUser = async (fullName, password) => {
   try {
-    const response = await fetch('http://localhost:8000/api/authentication/authentication/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ full_name: fullName, password }),
+    const response = await sendPostRequest('/api/authentication/authentication/', {
+      full_name: fullName,
+      password,
     });
 
-    const data = await response.json();
-    console.log("Réponse du serveur:", data); // Ajoute ce log
-
-    if (!response.ok) {
-      throw new Error(data.detail || "Erreur lors de l'authentification");
+    if (response && response.access) {
+      await setAuthToken(response.access); // Stocker le token JWT
+      return response;
+    } else {
+      throw new Error("Authentification échouée, aucun token reçu");
     }
-
-    return data;
   } catch (error) {
-    console.error("Erreur dans loginUser:", error);
-    return null;
+    console.error("Erreur lors de la connexion:", error);
+    throw new Error(error.message || "Échec de l'authentification");
   }
 };
-
 
 // Déconnexion utilisateur
 export const logoutUser = async () => {
   await setAuthToken(null);
 };
-
 
 // Fonction pour créer un FormData avec les données d'image et agricoles
 const createFormData = (image, data) => {
@@ -103,33 +96,39 @@ const createFormData = (image, data) => {
   return formData;
 };
 
-// Fonction générique pour diagnostiquer des maladies ou uploader des données agricoles
+// Fonction pour envoyer un formulaire avec image et données agricoles
 export const uploadImageData = async (image, data, url = '/api/diagnosis/diagnosis/') => {
   const formData = createFormData(image, data);
-  const result = await sendFormData(url, formData);
-  return result ? result.diagnosis : null;
+  try {
+    const response = await apiClient.post(url, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data ? response.data.diagnosis : null;
+  } catch (error) {
+    console.error("Erreur lors de l'upload des données:", error);
+    return null;
+  }
 };
 
 // Fonction pour récupérer des recommandations vidéo
 export const fetchVideoRecommendations = async (query, page) => {
   try {
-    const response = await axios.get(`${BASE_URL}/api/youtube/youtube/`, {
+    const response = await apiClient.get('/api/youtube/youtube/', {
       params: { query, page },
     });
     return response.data;
   } catch (error) {
     console.error("Erreur lors de la récupération des recommandations vidéo:", error);
-    return []; // Retourner un tableau vide en cas d'erreur
+    return [];
   }
 };
 
 // Fonction pour envoyer un message au chatbot
 export const sendMessageToChatbot = async (message) => {
   try {
-    const response = await axios.post(`${BASE_URL}/api/chatbot/chatbot/`, { message });
-    console.log("Réponse du chatbot:", response.data); // Déboguer la réponse complète
-    
-    // Assurez-vous que la réponse contient une structure valide
+    const response = await apiClient.post('/api/chatbot/chatbot/', { message });
+    console.log("Réponse du chatbot:", response.data);
+
     if (response.data && (response.data.response || response.data.text)) {
       return response.data.response || response.data.text;
     } else {
@@ -137,6 +136,6 @@ export const sendMessageToChatbot = async (message) => {
     }
   } catch (error) {
     console.error("Erreur lors de la communication avec le chatbot:", error);
-    throw new Error("Erreur lors de la communication avec le chatbot."); // Lancer une erreur pour la gestion en amont
+    throw new Error("Erreur lors de la communication avec le chatbot.");
   }
 };

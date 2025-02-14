@@ -11,12 +11,12 @@ from difflib import get_close_matches
 nlp = spacy.load('fr_core_news_md')
 
 TYPES_INFOS_CONNUS = {
-    "description": ["description", "détails"],
+    "description": ["description", "détails", "decrit", "explique", "explication"],
     "cause": ["cause", "origine", "facteurs"],
     "conséquences": ["conséquences", "effets"],
-    "symptômes": ["symptômes", "signes"],
-    "prevention": ["prévention", "éviter"],
-    "traitement": ["traitement", "soigner", "remède"]
+    "symptômes": ["symptômes", "signes", "manifestations"],
+    "prevention": ["prévention", "éviter", "prevenir", "esquiver"],
+    "traitement": ["traitement", "soigner", "remède", "traiter", "eradiquer", "eradication"]
 }
 
 MALADIES_CONNUES = [
@@ -29,7 +29,7 @@ MALADIES_CONNUES = [
 ]
 
 def obtenir_donnees_maladies():
-    client = MongoClient('mongodb://localhost:27017/')  
+    client = MongoClient('mongodb://localhost:27017/')
     db = client['tomate_db']
     collection = db['maladies']
 
@@ -69,28 +69,65 @@ def extraire_mots_cles(message, user_id):
             maladies_detectees.append(last_maladie)
 
     return (
-        maladies_detectees[0] if len(maladies_detectees) == 1 else None,
-        infos_detectees[0] if len(infos_detectees) == 1 else None,
-        len(maladies_detectees) > 1 or len(infos_detectees) > 1
+        maladies_detectees,  # Liste des maladies détectées
+        infos_detectees,     # Liste des types d'informations détectées
     )
 
 def generer_reponse(message, user_id):
-    maladie, type_info, ambiguite = extraire_mots_cles(message, user_id)
+    """Génère une réponse en fonction du message et de l'identifiant de l'utilisateur."""
+    message = message.lower().strip()
 
-    if ambiguite:
-        return "Votre demande est ambiguë. Pouvez-vous préciser votre question ?"
+    # Cas spécifique : L'utilisateur veut tout savoir sur la tomate (formulations variées)
+    if any(phrase in message for phrase in [
+        "tout savoir sur la tomate", "tout sur la tomate", "informations complètes sur la tomate",
+        "détails sur toutes les maladies de la tomate", "savoir tout sur les maladies de la tomate",
+        "donne-moi tout sur la tomate", "tout ce qu'il faut savoir sur la tomate"
+    ]):
+        return generer_reponse_tout_savoir()
 
-    if maladie:
-        cache.set(f"user_{user_id}_last_maladie", maladie, timeout=300)  # Sauvegarde de la dernière maladie pendant 5 min
+    # Extraire les maladies et types d'informations du message
+    maladies, types_info = extraire_mots_cles(message, user_id)
 
-    if not maladie:
-        return "Parlez-vous de 'Mildiou' ou 'Brûlure précoce' ?"
+    if not maladies and not types_info:
+        return "Aucune maladie ou information spécifique détectée. Pouvez-vous préciser ?"
 
-    if not type_info:
-        return f"Voulez-vous en savoir plus sur la description, les causes ou le traitement de {maladie} ?"
+    # Mise à jour du cache uniquement si une maladie spécifique est détectée
+    if maladies:
+        cache.set(f"user_{user_id}_last_maladie", maladies[0], timeout=300)  # Mise à jour de la maladie
+    else:
+        # Si aucune maladie spécifique n'est trouvée, on peut utiliser la dernière maladie du cache si nécessaire
+        last_maladie = cache.get(f"user_{user_id}_last_maladie")
+        if last_maladie:
+            maladies.append(last_maladie)  # Utilisation de la dernière maladie si nécessaire
 
-    contenu = DONNEES_MALADIES.get(maladie, {}).get(type_info, "Je ne trouve pas cette information.")
-    return contenu if contenu else "Désolé, je n'ai pas d'informations précises sur ce sujet."
+    if types_info:
+        cache.set(f"user_{user_id}_last_type_info", types_info[0], timeout=300)  # Mise à jour du type d'info
+
+    # Gestion des multiples maladies et informations
+    reponses = []
+
+    if not types_info:
+        for maladie in maladies:
+            reponses.append(f"Voulez-vous en savoir plus sur la description, les causes ou le traitement de {maladie} ?")
+    else:
+        for maladie in maladies:
+            for type_info in types_info:
+                contenu = DONNEES_MALADIES.get(maladie, {}).get(type_info, "Je ne trouve pas cette information.")
+                reponses.append(contenu if contenu else f"Désolé, je n'ai pas d'informations sur {maladie} pour ce type.")
+
+    return " ".join(reponses)
+
+def generer_reponse_tout_savoir():
+    """Retourne toutes les informations disponibles sur toutes les maladies liées à la tomate."""
+    reponses = []
+    
+    for maladie in MALADIES_CONNUES:
+        reponses.append(f"Pour {maladie}, voici toutes les informations disponibles :")
+        for type_info in TYPES_INFOS_CONNUS.keys():
+            contenu = DONNEES_MALADIES.get(maladie, {}).get(type_info, f"Aucune information disponible pour {type_info}.")
+            reponses.append(f"- {type_info.capitalize()}: {contenu}")
+    
+    return "\n".join(reponses)
 
 @api_view(["POST"])
 def chatbot_response(request):

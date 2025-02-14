@@ -81,5 +81,6 @@ USE_TZ = True
 
 # Sécurisation de la clé secrète de Django en environnement de production
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'votre_clé_secrète')
-# settings.py
+
+# Model d'authentification personnalisé
 AUTH_USER_MODEL = 'authentication.CustomUser'
