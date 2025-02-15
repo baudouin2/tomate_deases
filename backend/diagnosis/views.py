@@ -7,13 +7,32 @@ import joblib
 import traceback
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from .models import DiseaseDiagnosis
+from pymongo import MongoClient
+
+# Connexion à la base de données MongoDB
+client = MongoClient('mongodb://localhost:27017/')
+db = client['tomate_db']
+collection = db['maladies']
 
 # Définition des chemins des fichiers
+import os
+
+def get_current_directory():
+    # Récupérer le chemin absolu du répertoire où le script est exécuté
+    current_directory = os.path.dirname(os.path.abspath(__file__))
+    
+    # Remplacer les antislashs par des barres obliques
+    return current_directory.replace(os.sep, '/')
+
+# Utilisation de la fonction get_current_directory pour obtenir le répertoire actuel
+current_directory = get_current_directory()
+
+# Créer les chemins relatifs
 MODEL_PATHS = {
-    "model": "C:/Users/BAUDOUIN/Desktop/tomate_deases/backend/diagnosis/model_tomates.tflite",
-    "one_hot_encoder": "C:/Users/BAUDOUIN/Desktop/tomate_deases/backend/diagnosis/onehot_encoder.pkl",
-    "label_encoder": "C:/Users/BAUDOUIN/Desktop/tomate_deases/backend/diagnosis/label_encoder.pkl",
-    "scaler": "C:/Users/BAUDOUIN/Desktop/tomate_deases/backend/diagnosis/scaler.pkl"
+    "model": os.path.join(current_directory, "model_tomates.tflite").replace(os.sep, '/'),
+    "one_hot_encoder": os.path.join(current_directory, "onehot_encoder.pkl").replace(os.sep, '/'),
+    "label_encoder": os.path.join(current_directory, "label_encoder.pkl").replace(os.sep, '/'),
+    "scaler": os.path.join(current_directory, "scaler.pkl").replace(os.sep, '/')
 }
 
 # Chargement des ressources
@@ -103,10 +122,14 @@ def diagnose_disease(request):
         # Faire la prédiction sans stocker l'image
         predicted_label, confidence = predict(image, context_data)
 
-        recommendation = None
+        # Vérification si la confiance est faible
         if confidence < 50:
             predicted_label = "Aucune maladie de tomate détectée"
             recommendation = "Veuillez vous assurer que vous soumettez bien une image de feuille de tomate"
+        else:
+            # Extraire la recommandation depuis la base de données
+            maladie_data = collection.find_one({"nom": predicted_label})
+            recommendation = maladie_data.get("traitement", "Aucune recommandation trouvée")
 
         # Stocker l'image et les résultats après le diagnostic
         diagnosis = DiseaseDiagnosis.objects.create(

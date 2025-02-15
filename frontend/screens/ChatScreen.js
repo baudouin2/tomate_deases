@@ -4,14 +4,16 @@ import {
   Text,
   TextInput,
   FlatList,
-  KeyboardAvoidingView,
-  Platform,
   StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
   TouchableOpacity,
+  Alert,
+  Keyboard,
+  Platform,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Clipboard,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useAppContext } from '../contexts/AppContext';
 import { sendMessageToChatbot } from '../services/api';
 import { ERROR_MESSAGES } from '../util/constants';
@@ -22,6 +24,8 @@ const messagesReducer = (state, action) => {
   switch (action.type) {
     case 'ADD_MESSAGE':
       return [...state, action.payload];
+    case 'REMOVE_MESSAGES':
+      return state.filter((_, index) => !action.payload.includes(index));
     default:
       return state;
   }
@@ -34,64 +38,99 @@ const ChatScreen = () => {
   const [messages, dispatch] = useReducer(messagesReducer, initialState);
   const [userInput, setUserInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [selectedMessages, setSelectedMessages] = useState([]);
   const flatListRef = useRef(null);
 
-  // Ajouter un message à la conversation
+  // Ajouter un message
   const addMessage = (sender, text) => {
-    const message = {
-      sender,
-      text,
-      timestamp: new Date(),
-    };
-    dispatch({ type: 'ADD_MESSAGE', payload: message });
+    dispatch({
+      type: 'ADD_MESSAGE',
+      payload: { sender, text, timestamp: new Date() },
+    });
   };
 
-  // Envoyer un message à l'IA
-  const sendMessage = useCallback(async () => {
-    if (userInput.trim()) {
-      addMessage('user', userInput);
-      setUserInput('');
-      setLoading(true);
+  // Supprimer les messages sélectionnés
+  const removeSelectedMessages = () => {
+    dispatch({ type: 'REMOVE_MESSAGES', payload: selectedMessages });
+    setSelectedMessages([]); // Désélectionner après suppression
+  };
 
-      try {
-        const botText = await sendMessageToChatbot(userInput);
-        addMessage('bot', botText);
-      } catch (error) {
-        console.error('Erreur lors de l\'obtention de la réponse du chatbot:', error);
-        addMessage('bot', ERROR_MESSAGES?.API_ERROR || 'Une erreur est survenue.');
-      } finally {
-        setLoading(false);
-      }
+  // Copier les messages sélectionnés
+  const copySelectedMessages = () => {
+    const textsToCopy = selectedMessages.map(index => messages[index]?.text).join('\n');
+    Clipboard.setString(textsToCopy);
+    Alert.alert('Copié', 'Les messages sélectionnés ont été copiés.');
+    setSelectedMessages([]); // Désélectionner après copie
+  };
+
+  // Gérer la sélection d’un message (appui long)
+  const toggleMessageSelection = (index) => {
+    setSelectedMessages((prevSelected) =>
+      prevSelected.includes(index)
+        ? prevSelected.filter(i => i !== index) // Désélectionner
+        : [...prevSelected, index] // Sélectionner
+    );
+  };
+
+  // Envoyer un message
+  const sendMessage = useCallback(async () => {
+    if (!userInput.trim()) return;
+
+    addMessage('user', userInput);
+    setUserInput('');
+    setLoading(true);
+
+    try {
+      const botText = await sendMessageToChatbot(userInput);
+      addMessage('bot', botText);
+    } catch (error) {
+      console.error('Erreur du chatbot:', error);
+      addMessage('bot', ERROR_MESSAGES?.API_ERROR || 'Une erreur est survenue.');
+    } finally {
+      setLoading(false);
     }
   }, [userInput]);
 
-  // Rendu des messages
-  const renderItem = ({ item }) => (
-    <View
-      style={[
-        styles.messageContainer,
-        item.sender === 'user'
-          ? [styles.userMessage, isDarkMode && styles.userMessageDark]
-          : [styles.botMessage, isDarkMode && styles.botMessageDark],
-      ]}
-    >
-      <Text style={[styles.messageText, isDarkMode && { color: '#FFF' }]}>
-        {item.text}
-      </Text>
-    </View>
-  );
-
-  // Faire défiler automatiquement les messages
+  // Défilement automatique
   useEffect(() => {
     if (flatListRef.current) {
-      flatListRef.current.scrollToEnd({ animated: true });
+      setTimeout(() => flatListRef.current.scrollToEnd({ animated: true }), 100);
     }
   }, [messages]);
 
+  // Rendu des messages
+  const renderItem = ({ item, index }) => {
+    const isSelected = selectedMessages.includes(index);
+
+    return (
+      <TouchableOpacity
+        onLongPress={() => toggleMessageSelection(index)}
+        style={[
+          styles.messageWrapper,
+          isSelected && styles.selectedMessage,
+        ]}
+      >
+        {isSelected && (
+          <MaterialIcons name="check-circle" size={22} color="#00A6FF" style={styles.checkbox} />
+        )}
+        <View
+          style={[
+            styles.messageContainer,
+            item.sender === 'user' ? styles.userMessage : styles.botMessage,
+            isDarkMode && (item.sender === 'user' ? styles.userMessageDark : styles.botMessageDark),
+          ]}
+        >
+          <Text style={[styles.messageText, isDarkMode && { color: '#FFF' }]}>{item.text}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <KeyboardAvoidingView
+      style={[styles.container, isDarkMode && { backgroundColor: '#0A192F' }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={[styles.container, { backgroundColor: isDarkMode ? '#0A1F44' : '#F5F7FA' }]}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.innerContainer}>
@@ -100,10 +139,23 @@ const ChatScreen = () => {
             data={messages}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
-            contentContainerStyle={{ paddingBottom: 20 }}
+            contentContainerStyle={{ flexGrow: 1, justifyContent: messages.length ? 'flex-start' : 'center' }}
+            keyboardShouldPersistTaps="handled"
           />
 
-          {/* Barre d'entrée du message */}
+          {selectedMessages.length > 0 && (
+            <View style={styles.actionsContainer}>
+              <TouchableOpacity onPress={copySelectedMessages} style={styles.actionButton}>
+                <MaterialIcons name="content-copy" size={24} color="white" />
+                <Text style={styles.actionText}>Copier</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={removeSelectedMessages} style={[styles.actionButton, styles.deleteButton]}>
+                <MaterialIcons name="delete" size={24} color="white" />
+                <Text style={styles.actionText}>Supprimer</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
           <View style={[styles.inputContainer, isDarkMode && styles.inputContainerDark]}>
             <TextInput
               style={[styles.textInput, isDarkMode && styles.textInputDark]}
@@ -118,8 +170,8 @@ const ChatScreen = () => {
             <TouchableOpacity onPress={sendMessage} disabled={loading}>
               <Ionicons
                 name="send"
-                size={30}
-                color={loading ? '#888' : isDarkMode ? '#007BFF' : '#2D9CDB'}
+                size={28}
+                color={loading ? '#888' : isDarkMode ? '#00A6FF' : '#2D9CDB'}
                 style={styles.sendIcon}
               />
             </TouchableOpacity>
