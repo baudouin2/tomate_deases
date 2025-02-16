@@ -92,7 +92,7 @@ npx expo start
 ---
 
 ## 📩 Contact
-Si vous avez des questions ou souhaitez contribuer, n'hésitez pas à nous contacter à **[email@example.com](mailto:bilongbaudouin2.0@gmail.com)**.
+Si vous avez des questions ou souhaitez contribuer, n'hésitez pas à nous contacter à **[bilongbaudouin2.0@gmail.com](mailto:bilongbaudouin2.0@gmail.com)**.
 
 🚀 Bon développement !
 
