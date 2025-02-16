@@ -19,14 +19,18 @@ const sendPostRequest = async (url, data) => {
   }
 };
 
-// Gestion du token d'authentification
+// Gestion du token d'authentification avec expiration
 const setAuthToken = async (token) => {
   if (token) {
     apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
     await AsyncStorage.setItem('access_token', token);
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 14); // Expire après 14 jours
+    await AsyncStorage.setItem('token_expiration', expirationDate.toISOString());
   } else {
     delete apiClient.defaults.headers['Authorization'];
     await AsyncStorage.removeItem('access_token');
+    await AsyncStorage.removeItem('token_expiration');
   }
 };
 
@@ -54,7 +58,7 @@ export const loginUser = async (fullName, password) => {
     });
 
     if (response && response.access) {
-      await setAuthToken(response.access); // Stocker le token JWT
+      await setAuthToken(response.access); // Stocker le token JWT avec expiration
       return response;
     } else {
       throw new Error("Authentification échouée, aucun token reçu");
@@ -68,6 +72,15 @@ export const loginUser = async (fullName, password) => {
 // Déconnexion utilisateur
 export const logoutUser = async () => {
   await setAuthToken(null);
+};
+
+// Vérification du token expiré
+export const isTokenValid = async () => {
+  const token = await AsyncStorage.getItem('access_token');
+  const expiration = await AsyncStorage.getItem('token_expiration');
+
+  if (!token || !expiration) return false;
+  return new Date() < new Date(expiration);
 };
 
 // Fonction pour créer un FormData avec les données d'image et agricoles
