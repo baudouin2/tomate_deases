@@ -13,8 +13,18 @@ import Icon from 'react-native-vector-icons/Feather';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+const TOKEN_EXPIRATION_DAYS = 14;
 
-// 📌 **1. Navigation principale après connexion**
+const isTokenValid = async () => {
+  const token = await AsyncStorage.getItem('access_token');
+  const tokenTimestamp = await AsyncStorage.getItem('token_timestamp');
+  if (!token || !tokenTimestamp) return false;
+
+  const now = Date.now();
+  const expirationTime = TOKEN_EXPIRATION_DAYS * 24 * 60 * 60 * 1000;
+  return now - parseInt(tokenTimestamp, 10) < expirationTime;
+};
+
 const MainTabs = () => {
   const { theme, toggleTheme } = useAppContext();
   const currentTheme = theme === 'light' ? lightTheme : darkTheme;
@@ -40,21 +50,23 @@ const MainTabs = () => {
   );
 };
 
-// 📌 **2. Stack pour la connexion (Login uniquement)**
 const AuthStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Login" component={LoginScreen} />
   </Stack.Navigator>
 );
 
-// 📌 **3. Gestion de l'authentification**
 const ThemedApp = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   useEffect(() => {
     const checkAuth = async () => {
-      const token = await AsyncStorage.getItem('access_token');
-      setIsAuthenticated(!!token); // Convertit en booléen
+      const valid = await isTokenValid();
+      setIsAuthenticated(valid);
+      if (!valid) {
+        await AsyncStorage.removeItem('access_token');
+        await AsyncStorage.removeItem('token_timestamp');
+      }
     };
     checkAuth();
   }, []);
