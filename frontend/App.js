@@ -13,16 +13,13 @@ import Icon from 'react-native-vector-icons/Feather';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
 const TOKEN_EXPIRATION_DAYS = 14;
 
-const isTokenValid = async () => {
-  const token = await AsyncStorage.getItem('access_token');
-  const tokenTimestamp = await AsyncStorage.getItem('token_timestamp');
-  if (!token || !tokenTimestamp) return false;
-
-  const now = Date.now();
-  const expirationTime = TOKEN_EXPIRATION_DAYS * 24 * 60 * 60 * 1000;
-  return now - parseInt(tokenTimestamp, 10) < expirationTime;
+const isTokenExpired = async () => {
+  const expiration = await AsyncStorage.getItem('token_expiration');
+  if (!expiration) return true;
+  return new Date() > new Date(expiration);
 };
 
 const MainTabs = () => {
@@ -61,11 +58,15 @@ const ThemedApp = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const valid = await isTokenValid();
-      setIsAuthenticated(valid);
-      if (!valid) {
+      const token = await AsyncStorage.getItem('access_token');
+      const expired = await isTokenExpired();
+
+      if (token && !expired) {
+        setIsAuthenticated(true);
+      } else {
         await AsyncStorage.removeItem('access_token');
-        await AsyncStorage.removeItem('token_timestamp');
+        await AsyncStorage.removeItem('token_expiration');
+        setIsAuthenticated(false);
       }
     };
     checkAuth();
